@@ -11,7 +11,6 @@ jobs:
     timeout-minutes: 45
     container:
       image: mcr.microsoft.com/playwright:v1.63.0-jammy@sha256:167d0506cfbe3c294fb214b2d11737326eeee028aa611fa1ba538e5057675847
-      options: --user 1001
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -22,7 +21,10 @@ jobs:
           cache: false
 
       - name: Build API
+        env:
+          CGO_ENABLED: 1
         run: |
+          apt-get update -q && apt-get install -yq --no-install-recommends gcc libc6-dev
           mkdir -p frontend/dist
           touch frontend/dist/index.html
           go build -tags osusergo -ldflags "-s -w" -o vikunja .
