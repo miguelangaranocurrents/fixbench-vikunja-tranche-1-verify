@@ -27,7 +27,7 @@ jobs:
           apt-get update -q && apt-get install -yq --no-install-recommends gcc libc6-dev
           mkdir -p frontend/dist
           touch frontend/dist/index.html
-          go build -tags osusergo -ldflags "-s -w" -o vikunja .
+          go build -buildvcs=false -tags osusergo -ldflags "-s -w" -o vikunja .
 
       - uses: ./.github/actions/setup-frontend
 
