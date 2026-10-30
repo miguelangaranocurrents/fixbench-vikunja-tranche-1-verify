@@ -207,6 +207,8 @@ test.describe('Project View Kanban', () => {
 		const lastBucket = moreBuckets[moreBuckets.length - 1]
 		const tasks = await createTaskWithBuckets(buckets)
 		await page.goto('/projects/1/4')
+		await expect(page.locator(`.kanban .bucket[data-bucket-id="${lastBucket.id}"]`)).toBeAttached()
+		await page.waitForLoadState('networkidle')
 
 		const board = page.locator('.kanban')
 		const boardBox = await board.boundingBox()
